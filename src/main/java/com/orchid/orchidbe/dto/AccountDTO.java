@@ -11,7 +11,7 @@ public interface AccountDTO {
 
         @Email(message = "Email is not valid")
         @NotBlank(message = "Email is required")
-        @Schema(description = "User email", example = "mnhw.0612@gmail.com")
+        @Schema(description = "User email", example = "nhducminhqt@gmail.com")
         String email,
 
         String password

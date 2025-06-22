@@ -54,7 +54,7 @@ public class AccountServiceImpl implements AccountService {
         newAccount.setName(account.name());
         newAccount.setEmail(account.email());
         newAccount.setPassword(passwordEncoder.encode(account.password()));
-        newAccount.setRole(roleService.getById("2")); // Default role, can be changed later
+        newAccount.setRole(roleService.getByName("ROLE_USER")); // Default role, can be changed later
 
         log.info("New user registered successfully");
         accountRepository.save(newAccount);

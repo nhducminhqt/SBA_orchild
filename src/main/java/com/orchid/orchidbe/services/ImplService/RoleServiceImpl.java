@@ -26,6 +26,12 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public Role getByName(String name) {
+        return roleRepository.findByName(name)
+                .orElseThrow(() -> new IllegalArgumentException("Role with name " + name + " not found"));
+    }
+
+    @Override
     public void add(RoleDTO.RoleReq role) {
         if(roleRepository.existsByName(role.name())) {
             throw new IllegalArgumentException("Role with name " + role.name() + " already exists");
