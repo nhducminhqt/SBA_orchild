@@ -42,54 +42,51 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .sessionManagement(
-                session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .csrf(AbstractHttpConfigurer::disable)
-            .exceptionHandling(ex -> ex
-                .authenticationEntryPoint(authenticationEntryPoint)
-                .accessDeniedHandler(accessDeniedHandler))
-            .authorizeHttpRequests(auth -> auth
-                // Authentication endpoints
-                .requestMatchers(
-                    String.format("%s/auth/login", apiPrefix)
-                ).permitAll()
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .sessionManagement(
+                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .csrf(AbstractHttpConfigurer::disable)
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(authenticationEntryPoint)
+                        .accessDeniedHandler(accessDeniedHandler))
+                .authorizeHttpRequests(auth -> auth
+                        // Authentication endpoints
+                        .requestMatchers(
+                                String.format("%s/auth/login", apiPrefix)
+                        ).permitAll()
 
-                // Public API endpoints
-                .requestMatchers(GET,
-                                 String.format("%s/roles/**", apiPrefix),
-                                 String.format("%s/categories/**", apiPrefix),
-                                 String.format("%s/accounts/**", apiPrefix)
-                ).permitAll()
+                        // Public API endpoints accessible by ROLE_USER
+                        .requestMatchers(GET,
+                                String.format("%s/orchids/**", apiPrefix),
+                                String.format("%s/categories/**", apiPrefix)
+                        ).hasAuthority("ROLE_ADMIN")
 
-                // Require ADMIN role for POST operations
-                .requestMatchers(POST,
-                                 String.format("%s/roles/**", apiPrefix),
-                                 String.format("%s/categories/**", apiPrefix),
-                                 String.format("%s/accounts/register", apiPrefix)
-                ).permitAll()
-                .requestMatchers(PUT,
-                                 String.format("%s/roles/**", apiPrefix),
-                                 String.format("%s/categories/**", apiPrefix)
-                ).permitAll()
-                .requestMatchers(DELETE,
-                                 String.format("%s/roles/**", apiPrefix),
-                                 String.format("%s/categories/**", apiPrefix)
-                ).permitAll()
-                .requestMatchers(GET,
-                                 String.format("%s/accounts/me", apiPrefix)
-                ).authenticated()
-                .requestMatchers(
-                    "/graphiql", "/graphql", "/error",
-                    "/v3/api-docs/**", "/v3/api-docs.yaml", "/v3/api-docs/swagger-config",
-                    "/swagger-ui/**", "/swagger-ui.html",
-                    apiPrefix + "/swagger-ui/**",
-                    apiPrefix + "/swagger-ui.html",
-                    apiPrefix + "/api-docs/**"
-                ).permitAll()
+                        // Admin-only endpoints
+                        .requestMatchers(POST,
+                                String.format("%s/orchids/**", apiPrefix),
+                                String.format("%s/categories/**", apiPrefix)
+                        ).hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(PUT,
+                                String.format("%s/orchids/**", apiPrefix),
+                                String.format("%s/categories/**", apiPrefix)
+                        ).hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(DELETE,
+                                String.format("%s/orchids/**", apiPrefix),
+                                String.format("%s/categories/**", apiPrefix)
+                        ).hasAuthority("ROLE_ADMIN")
 
-                .anyRequest().authenticated())
-            .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+                        // Swagger and other public endpoints
+                        .requestMatchers(
+                                "/graphiql", "/graphql", "/error",
+                                "/v3/api-docs/**", "/v3/api-docs.yaml", "/v3/api-docs/swagger-config",
+                                "/swagger-ui/**", "/swagger-ui.html",
+                                apiPrefix + "/swagger-ui/**",
+                                apiPrefix + "/swagger-ui.html",
+                                apiPrefix + "/api-docs/**"
+                        ).permitAll()
+
+                        .anyRequest().authenticated())
+                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

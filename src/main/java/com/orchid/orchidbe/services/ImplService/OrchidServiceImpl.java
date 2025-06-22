@@ -21,21 +21,28 @@ public class OrchidServiceImpl implements OrchidService {
 
     @Override
     public Orchid getById(String id) {
-        return null;
+        return orchidRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Orchid not found with ID: " + id));
     }
 
     @Override
     public void add(Orchid orchid) {
-
+        orchidRepository.save(orchid);
     }
 
     @Override
     public void update(Orchid orchid) {
-
+        if (!orchidRepository.existsById(orchid.getId())) {
+            throw new IllegalArgumentException("Orchid not found with ID: " + orchid.getId());
+        }
+        orchidRepository.save(orchid);
     }
 
     @Override
     public void delete(Orchid orchid) {
-
+        if (!orchidRepository.existsById(orchid.getId())) {
+            throw new IllegalArgumentException("Orchid not found with ID: " + orchid.getId());
+        }
+        orchidRepository.delete(orchid);
     }
 }
