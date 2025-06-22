@@ -5,10 +5,10 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
-public interface AccountRepository extends MongoRepository<Account, Integer> {
+public interface AccountRepository extends MongoRepository<Account, String> {
 
     boolean existsByEmail(String email);
-    boolean existsByEmailAndIdNot(String email, int id);
+    boolean existsByEmailAndIdNot(String email, String id);
     Optional<Account> findByEmail(String email);
 
 }

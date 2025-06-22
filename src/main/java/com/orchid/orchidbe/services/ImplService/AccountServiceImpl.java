@@ -39,7 +39,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account getById(int id) {
+    public Account getById(String id) {
         return accountRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Account not found"));
     }

@@ -7,9 +7,9 @@ import java.util.Optional;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 
-public interface TokenRepository extends MongoRepository<Token, Integer> {
+public interface TokenRepository extends MongoRepository<Token, String> {
 
-    List<Token> findByAccountId(Integer accountId);
+    List<Token> findByAccountId(String accountId);
 
     Optional<Token> findByToken(String token);
 

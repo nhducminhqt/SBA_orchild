@@ -17,7 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Orchid {
 
     @Id
-    private Integer id; // Use Integer for MongoDB IDs
+    private String id; // MongoDB uses String for IDs
 
     private boolean isNatural;
 

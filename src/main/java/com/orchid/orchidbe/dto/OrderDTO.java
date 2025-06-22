@@ -7,11 +7,11 @@ import java.util.Date;
 public interface OrderDTO {
 
     record OrderRes(
-        Integer id,
+        String id,
         Double totalAmount,
         Date orderDate,
         OrderStatus orderStatus,
-        Integer accountId
+        String accountId
     ) {
 
         public static OrderRes fromEntity(Order order) {

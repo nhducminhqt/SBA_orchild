@@ -19,7 +19,7 @@ import java.util.Date;
 public class Order {
 
     @Id
-    private Integer id; // Use Integer for MongoDB IDs
+    private String id; // MongoDB uses String for IDs
 
     private Double totalAmount;
 
