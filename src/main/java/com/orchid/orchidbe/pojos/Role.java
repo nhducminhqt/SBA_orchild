@@ -17,7 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Role {
 
     @Id
-    private String id; // MongoDB uses String for IDs
+    private Integer id; // Use Integer for MongoDB IDs
 
     private String name;
 

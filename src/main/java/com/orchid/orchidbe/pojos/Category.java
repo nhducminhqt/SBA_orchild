@@ -16,7 +16,7 @@ import lombok.Setter;
 @Builder
 public class Category {
     @Id
-    private String id; // Use String for MongoDB IDs
+    private Integer id; // Use Integer for MongoDB IDs
 
     private String name; // No need for @Column
 }

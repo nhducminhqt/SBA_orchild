@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class Token {
 
     @Id
-    private String id; // MongoDB uses String for IDs
+    private Integer id; // Use Integer for MongoDB IDs
 
     private String token;
 

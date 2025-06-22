@@ -25,8 +25,7 @@ import java.util.List;
 public class Account implements UserDetails {
 
     @Id
-    private String id; // MongoDB uses String for IDs
-
+    private Integer id; // Use Integer for MongoDB IDs
     private String name;
 
     private String email;
