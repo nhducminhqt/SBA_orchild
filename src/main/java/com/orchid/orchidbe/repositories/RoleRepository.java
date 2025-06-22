@@ -1,10 +1,14 @@
 package com.orchid.orchidbe.repositories;
 
 import com.orchid.orchidbe.pojos.Role;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface RoleRepository extends JpaRepository<Role, Integer> {
+import java.util.Optional;
+
+public interface RoleRepository extends MongoRepository<Role, Integer> {
 
     boolean existsByName(String name);
+
+    Optional<Role> findByName(String name);
 
 }
