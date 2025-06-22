@@ -57,7 +57,7 @@ public class TokenServiceImpl implements TokenService {
 
     @Transactional
     @Override
-    public Token addToken(int userId, String token) {
+    public Token addToken(String userId, String token) {
         Account existingUser = accountService.getById(userId);
         List<Token> userTokens = tokenRepository.findByAccountId(existingUser.getId());
         int tokenCount = userTokens.size();

@@ -39,7 +39,7 @@ public class AccountController {
             @ApiResponse(responseCode = "200", description = "Account found"),
             @ApiResponse(responseCode = "404", description = "Account not found")
     })
-    public ResponseEntity<Account> getAccountById(@PathVariable int id) {
+    public ResponseEntity<Account> getAccountById(@PathVariable String id) {
         Account account = accountService.getById(id);
         if (account == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -65,7 +65,7 @@ public class AccountController {
             @ApiResponse(responseCode = "400", description = "Invalid input or email already exists"),
             @ApiResponse(responseCode = "404", description = "Account not found")
     })
-    public ResponseEntity<Void> updateAccount(@PathVariable int id, @RequestBody AccountDTO.UpdateAccountReq accountReq) {
+    public ResponseEntity<Void> updateAccount(@PathVariable String id, @RequestBody AccountDTO.UpdateAccountReq accountReq) {
         accountService.update(id, accountReq);
         return ResponseEntity.ok().build();
     }
@@ -76,7 +76,7 @@ public class AccountController {
             @ApiResponse(responseCode = "204", description = "Account deleted successfully"),
             @ApiResponse(responseCode = "404", description = "Account not found")
     })
-    public ResponseEntity<Void> deleteAccount(@PathVariable int id) {
+    public ResponseEntity<Void> deleteAccount(@PathVariable String id) {
         accountService.delete(id);
         return ResponseEntity.noContent().build();
     }

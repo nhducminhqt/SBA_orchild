@@ -25,7 +25,7 @@ public class RoleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Role> getById(@PathVariable int id) {
+    public ResponseEntity<Role> getById(@PathVariable String id) {
         Role role = roleService.getById(id);
         if (role == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -40,13 +40,13 @@ public class RoleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable int id, @RequestBody RoleDTO.RoleReq req) {
+    public ResponseEntity<Void> update(@PathVariable String id, @RequestBody RoleDTO.RoleReq req) {
         roleService.update(id, req);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable int id) {
+    public ResponseEntity<Void> delete(@PathVariable String id) {
         roleService.delete(id);
         return ResponseEntity.noContent().build();
     }

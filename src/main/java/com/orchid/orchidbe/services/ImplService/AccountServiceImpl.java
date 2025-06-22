@@ -54,14 +54,14 @@ public class AccountServiceImpl implements AccountService {
         newAccount.setName(account.name());
         newAccount.setEmail(account.email());
         newAccount.setPassword(passwordEncoder.encode(account.password()));
-        newAccount.setRole(roleService.getById(2)); // Default role, can be changed later
+        newAccount.setRole(roleService.getById("2")); // Default role, can be changed later
 
         log.info("New user registered successfully");
         accountRepository.save(newAccount);
     }
 
     @Override
-    public void update(int id, AccountDTO.UpdateAccountReq account) {
+    public void update(String id, AccountDTO.UpdateAccountReq account) {
 
         var role = roleService.getById(account.roleId());
         if(role == null) {
@@ -84,7 +84,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(String id) {
         var existingAccount = getById(id);
         accountRepository.delete(existingAccount);
     }

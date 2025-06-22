@@ -24,7 +24,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getById(int id) {
+    public Order getById(String id) {
         return null;
     }
 
@@ -39,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(String id) {
 
     }
 }

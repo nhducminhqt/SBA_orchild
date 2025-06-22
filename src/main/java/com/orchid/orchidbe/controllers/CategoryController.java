@@ -34,7 +34,7 @@ public class CategoryController {
             @ApiResponse(responseCode = "200", description = "Category found"),
             @ApiResponse(responseCode = "404", description = "Category not found")
     })
-    public ResponseEntity<Category> getCategoryById(@PathVariable int id) {
+    public ResponseEntity<Category> getCategoryById(@PathVariable String id) {
         Category category = categoryService.getById(id);
         if (category == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -60,7 +60,7 @@ public class CategoryController {
             @ApiResponse(responseCode = "400", description = "Invalid input or category name already exists"),
             @ApiResponse(responseCode = "404", description = "Category not found")
     })
-    public ResponseEntity<Void> updateCategory(@PathVariable int id, @RequestBody CategoryDTO.CategoryReq categoryReq) {
+    public ResponseEntity<Void> updateCategory(@PathVariable String id, @RequestBody CategoryDTO.CategoryReq categoryReq) {
         categoryService.update(id, categoryReq);
         return ResponseEntity.ok().build();
     }
@@ -71,7 +71,7 @@ public class CategoryController {
             @ApiResponse(responseCode = "204", description = "Category deleted successfully"),
             @ApiResponse(responseCode = "404", description = "Category not found")
     })
-    public ResponseEntity<Void> deleteCategory(@PathVariable int id) {
+    public ResponseEntity<Void> deleteCategory(@PathVariable String id) {
         categoryService.delete(id);
         return ResponseEntity.noContent().build();
     }
