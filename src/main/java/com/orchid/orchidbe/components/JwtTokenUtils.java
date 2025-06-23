@@ -48,6 +48,7 @@ public class JwtTokenUtils {
         //this.generateSecretKey();
         claims.put("email", user.getEmail());
         claims.put("userId", user.getId());
+        claims.put("role", user.getRole().getName());
         try {
             String token = Jwts.builder()
                 .setClaims(claims) //how to extract claims from this ?

@@ -3,9 +3,8 @@ package com.orchid.orchidbe.services.ImplService;
 import com.orchid.orchidbe.dto.OrderDTO;
 import com.orchid.orchidbe.pojos.Order;
 import com.orchid.orchidbe.repositories.OrderRepository;
-import java.util.List;
-
 import com.orchid.orchidbe.services.IService.OrderService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,28 +17,35 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDTO.OrderRes> getAll() {
         return orderRepository.findAll()
-            .stream()
-            .map(OrderDTO.OrderRes::fromEntity)
-            .toList();
+                .stream()
+                .map(OrderDTO.OrderRes::fromEntity)
+                .toList();
     }
 
     @Override
     public Order getById(String id) {
-        return null;
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Order not found with ID: " + id));
     }
 
     @Override
     public void add(Order order) {
-
+        orderRepository.save(order);
     }
 
     @Override
     public void update(Order order) {
-
+        if (!orderRepository.existsById(order.getId())) {
+            throw new IllegalArgumentException("Order not found with ID: " + order.getId());
+        }
+        orderRepository.save(order);
     }
 
     @Override
     public void delete(String id) {
-
+        if (!orderRepository.existsById(id)) {
+            throw new IllegalArgumentException("Order not found with ID: " + id);
+        }
+        orderRepository.deleteById(id);
     }
 }
