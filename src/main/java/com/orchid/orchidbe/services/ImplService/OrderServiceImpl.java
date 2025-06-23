@@ -48,4 +48,13 @@ public class OrderServiceImpl implements OrderService {
         }
         orderRepository.deleteById(id);
     }
+
+    @Override
+    public List<OrderDTO.OrderRes> getOrdersByAccountId(String accountId) {
+        return orderRepository.findAll()
+                .stream()
+                .filter(order -> order.getAccount() != null && accountId.equals(order.getAccount().getId()))
+                .map(OrderDTO.OrderRes::fromEntity)
+                .toList();
+    }
 }

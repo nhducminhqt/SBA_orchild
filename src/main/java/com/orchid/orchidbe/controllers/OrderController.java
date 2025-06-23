@@ -31,7 +31,7 @@ public class OrderController {
     }
 
     @PostMapping("")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_STAFF')")
     public ResponseEntity<Void> addOrder(@RequestBody Order order) {
         orderService.add(order);
         return ResponseEntity.ok().build();
@@ -50,5 +50,10 @@ public class OrderController {
     public ResponseEntity<Void> deleteOrder(@PathVariable String id) {
         orderService.delete(id);
         return ResponseEntity.ok().build();
+    }
+    @GetMapping("/my-orders")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<OrderDTO.OrderRes>> getMyOrders(@RequestParam String accountId) {
+        return ResponseEntity.ok(orderService.getOrdersByAccountId(accountId));
     }
 }
