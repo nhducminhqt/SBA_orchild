@@ -19,7 +19,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping("")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_STAFF')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<List<OrderDTO.OrderRes>> getOrders() {
         return ResponseEntity.ok(orderService.getAll());
     }
@@ -46,7 +46,7 @@ public class OrderController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_STAFF')")
     public ResponseEntity<Void> deleteOrder(@PathVariable String id) {
         orderService.delete(id);
         return ResponseEntity.ok().build();
