@@ -30,13 +30,16 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void add(Order order) {
+        if (order == null || order.getAccount() == null) {
+            throw new IllegalArgumentException("Order or associated account cannot be null");
+        }
         orderRepository.save(order);
     }
 
     @Override
     public void update(Order order) {
-        if (!orderRepository.existsById(order.getId())) {
-            throw new IllegalArgumentException("Order not found with ID: " + order.getId());
+        if (order == null || !orderRepository.existsById(order.getId())) {
+            throw new IllegalArgumentException("Order not found with ID: " + (order != null ? order.getId() : "null"));
         }
         orderRepository.save(order);
     }
@@ -51,9 +54,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDTO.OrderRes> getOrdersByAccountId(String accountId) {
-        return orderRepository.findAll()
+        if (accountId == null || accountId.isBlank()) {
+            throw new IllegalArgumentException("Account ID cannot be null or blank");
+        }
+        return orderRepository.findByAccountId(accountId)
                 .stream()
-                .filter(order -> order.getAccount() != null && accountId.equals(order.getAccount().getId()))
                 .map(OrderDTO.OrderRes::fromEntity)
                 .toList();
     }

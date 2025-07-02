@@ -35,7 +35,9 @@ public class Account implements UserDetails {
 
     @JsonIgnore
     private Role role; // Embedded or referenced relationship
-
+    public Account(String id) {
+        this.id = id;
+    }
     // Spring Security
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

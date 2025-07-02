@@ -1,6 +1,7 @@
 package com.orchid.orchidbe.controllers;
 
 import com.orchid.orchidbe.dto.OrderDTO;
+import com.orchid.orchidbe.pojos.Account;
 import com.orchid.orchidbe.pojos.Order;
 import com.orchid.orchidbe.services.IService.OrderService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,7 +33,13 @@ public class OrderController {
 
     @PostMapping("")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_STAFF')")
-    public ResponseEntity<Void> addOrder(@RequestBody Order order) {
+    public ResponseEntity<Void> addOrder(@RequestBody OrderDTO.OrderReq orderReq) {
+        Order order = Order.builder()
+                .totalAmount(orderReq.totalAmount())
+                .orderDate(orderReq.orderDate())
+                .orderStatus(orderReq.orderStatus())
+                .account(Account.builder().id(orderReq.accountId()).build()) // Use builder to set ID
+                .build();
         orderService.add(order);
         return ResponseEntity.ok().build();
     }
