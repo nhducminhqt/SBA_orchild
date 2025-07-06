@@ -38,7 +38,9 @@ public class OrderController {
                 .totalAmount(orderReq.totalAmount())
                 .orderDate(orderReq.orderDate())
                 .orderStatus(orderReq.orderStatus())
-                .account(Account.builder().id(orderReq.accountId()).build()) // Use builder to set ID
+                .account(Account.builder().id(orderReq.accountId()).build())
+                .address(orderReq.address()) // Set address
+                .phoneNumber(orderReq.phoneNumber()) // Set phone number
                 .build();
         orderService.add(order);
         return ResponseEntity.ok().build();

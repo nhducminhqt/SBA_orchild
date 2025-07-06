@@ -1,7 +1,7 @@
 package com.orchid.orchidbe.dto;
 
-import com.orchid.orchidbe.pojos.Order.OrderStatus;
 import com.orchid.orchidbe.pojos.Order;
+import com.orchid.orchidbe.pojos.Order.OrderStatus;
 import java.util.Date;
 
 public interface OrderDTO {
@@ -10,7 +10,9 @@ public interface OrderDTO {
             Double totalAmount,
             Date orderDate,
             OrderStatus orderStatus,
-            String accountId // Only the account ID is required
+            String accountId,
+            String address, // New field
+            String phoneNumber // New field
     ) {
     }
 
@@ -19,7 +21,9 @@ public interface OrderDTO {
             Double totalAmount,
             Date orderDate,
             OrderStatus orderStatus,
-            String accountId
+            String accountId,
+            String address, // New field
+            String phoneNumber // New field
     ) {
         public static OrderRes fromEntity(Order order) {
             return new OrderRes(
@@ -27,7 +31,9 @@ public interface OrderDTO {
                     order.getTotalAmount(),
                     order.getOrderDate(),
                     order.getOrderStatus(),
-                    order.getAccount() != null ? order.getAccount().getId() : null
+                    order.getAccount() != null ? order.getAccount().getId() : null,
+                    order.getAddress(), // Map address
+                    order.getPhoneNumber() // Map phone number
             );
         }
     }

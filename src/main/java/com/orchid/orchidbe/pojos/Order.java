@@ -29,6 +29,10 @@ public class Order {
 
     private Account account; // Embedded or referenced relationship
 
+    private String address; // New field for address
+
+    private String phoneNumber; // New field for phone number
+
     public enum OrderStatus {
         PENDING,
         PROCESSING,
