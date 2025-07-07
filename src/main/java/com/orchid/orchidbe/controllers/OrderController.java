@@ -62,10 +62,10 @@ public class OrderController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_STAFF')")
-    public ResponseEntity<Void> deleteOrder(@RequestBody OrderDTO.OrderReq orderReq) {
-        orderService.delete(orderReq.accountId()); // Use accountId or another unique identifier
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<Void> deleteOrder(@PathVariable String id) {
+        orderService.delete(id); // Use the order ID to delete
         return ResponseEntity.ok().build();
     }
     @GetMapping("/my-orders")

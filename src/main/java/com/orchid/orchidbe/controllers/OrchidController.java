@@ -1,5 +1,7 @@
 package com.orchid.orchidbe.controllers;
 
+import com.orchid.orchidbe.dto.OrchidDTO;
+import com.orchid.orchidbe.pojos.Category;
 import com.orchid.orchidbe.pojos.Orchid;
 import com.orchid.orchidbe.services.IService.OrchidService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,14 +30,30 @@ public class OrchidController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Void> addOrchid(@RequestBody Orchid orchid) {
+    public ResponseEntity<Void> addOrchid(@RequestBody OrchidDTO.OrchidReq orchidReq) {
+        Orchid orchid = Orchid.builder()
+                .isNatural(orchidReq.isNatural())
+                .description(orchidReq.description())
+                .name(orchidReq.name())
+                .url(orchidReq.url())
+                .price(orchidReq.price())
+                .category(new Category(orchidReq.categoryId())) // Map categoryId to Category
+                .build();
         orchidService.add(orchid);
         return ResponseEntity.status(201).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateOrchid(@PathVariable String id, @RequestBody Orchid orchid) {
-        orchid.setId(id); // Ensure the ID is set for the update
+    public ResponseEntity<Void> updateOrchid(@PathVariable String id, @RequestBody OrchidDTO.OrchidReq orchidReq) {
+        Orchid orchid = Orchid.builder()
+                .id(id)
+                .isNatural(orchidReq.isNatural())
+                .description(orchidReq.description())
+                .name(orchidReq.name())
+                .url(orchidReq.url())
+                .price(orchidReq.price())
+                .category(new Category(orchidReq.categoryId())) // Map categoryId to Category
+                .build();
         orchidService.update(orchid);
         return ResponseEntity.noContent().build();
     }

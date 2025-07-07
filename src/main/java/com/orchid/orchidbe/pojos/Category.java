@@ -19,4 +19,7 @@ public class Category {
     private String id; // Use String for MongoDB IDs
 
     private String name; // No need for @Column
+    public Category(String id) {
+        this.id = id;
+    }
 }
