@@ -59,7 +59,7 @@ public class WebSecurityConfig {
                         .requestMatchers(GET,
                                 String.format("%s/orchids/**", apiPrefix),
                                 String.format("%s/categories/**", apiPrefix)
-                        ).hasAuthority("ROLE_ADMIN")
+                        ).hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
 
                         // Admin-only endpoints
                         .requestMatchers(POST,

@@ -48,16 +48,24 @@ public class OrderController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Void> updateOrder(@PathVariable String id, @RequestBody Order order) {
-        order.setId(id);
+    public ResponseEntity<Void> updateOrder(@PathVariable String id, @RequestBody OrderDTO.OrderReq orderReq) {
+        Order order = Order.builder()
+                .id(id) // Set the ID for the update
+                .totalAmount(orderReq.totalAmount())
+                .orderDate(orderReq.orderDate())
+                .orderStatus(orderReq.orderStatus())
+                .account(Account.builder().id(orderReq.accountId()).build())
+                .address(orderReq.address())
+                .phoneNumber(orderReq.phoneNumber())
+                .build();
         orderService.update(order);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_STAFF')")
-    public ResponseEntity<Void> deleteOrder(@PathVariable String id) {
-        orderService.delete(id);
+    public ResponseEntity<Void> deleteOrder(@RequestBody OrderDTO.OrderReq orderReq) {
+        orderService.delete(orderReq.accountId()); // Use accountId or another unique identifier
         return ResponseEntity.ok().build();
     }
     @GetMapping("/my-orders")
